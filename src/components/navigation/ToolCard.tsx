@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Star } from 'lucide-react';
+import { Star, type LucideIcon } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { ToolDefinition } from '@/types';
@@ -21,7 +21,7 @@ const availabilityBadge: Record<ToolDefinition['availability'], { label: string;
 export function ToolCard({ tool, isFavorite = false, onFavoriteToggle, compact = false }: Props) {
   const navigate = useNavigate();
   // Dynamically pick icon from Lucide
-  const IconComponent = (Icons as Record<string, React.ComponentType<{ className?: string }>>)[tool.icon] ?? Icons.File;
+  const IconComponent = ((Icons as unknown) as Record<string, LucideIcon>)[tool.icon] ?? Icons.File;
   const badge = availabilityBadge[tool.availability];
 
   return (

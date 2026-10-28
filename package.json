@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "oxlint",
+    "lint": "oxlint src",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -25,6 +28,7 @@
     "react-dom": "^19.3.1",
     "react-router-dom": "^6.30.6",
     "tailwindcss": "^3.4.19",
+    "tesseract.js": "^5.1.1",
     "xlsx": "^0.18.5",
     "zustand": "^5.0.16"
   },

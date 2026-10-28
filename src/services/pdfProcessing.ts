@@ -50,7 +50,7 @@ export async function mergePdfs(
   onProgress?.(100);
 
   return {
-    blob: new Blob([pdfBytes], { type: 'application/pdf' }),
+    blob: new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' }),
     fileName: 'merged.pdf',
     mimeType: 'application/pdf',
     metadata: { pageCount: merged.getPageCount() },
@@ -86,7 +86,7 @@ export async function splitPdf(
 
     const baseName = getBaseName(file.name);
     results.push({
-      blob: new Blob([pdfBytes], { type: 'application/pdf' }),
+      blob: new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' }),
       fileName: `${baseName}_pages_${start}-${end}.pdf`,
       mimeType: 'application/pdf',
       metadata: { pageCount: newDoc.getPageCount(), rangeStart: start, rangeEnd: end },
@@ -120,7 +120,7 @@ export async function splitPdfIntoPages(
     newDoc.addPage(copied);
     const pdfBytes = await newDoc.save();
     results.push({
-      blob: new Blob([pdfBytes], { type: 'application/pdf' }),
+      blob: new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' }),
       fileName: `${baseName}_page_${i + 1}.pdf`,
       mimeType: 'application/pdf',
       metadata: { pageNumber: i + 1 },
@@ -149,7 +149,7 @@ export async function compressPdf(
   onProgress?.(100);
 
   return {
-    blob: new Blob([pdfBytes], { type: 'application/pdf' }),
+    blob: new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' }),
     fileName: withExtension(getBaseName(file.name) + '_compressed', 'pdf'),
     mimeType: 'application/pdf',
     compressionNote:
@@ -205,7 +205,7 @@ export async function signPdf(
   onProgress?.(100);
 
   return {
-    blob: new Blob([pdfBytes], { type: 'application/pdf' }),
+    blob: new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' }),
     fileName: withExtension(getBaseName(file.name) + '_signed', 'pdf'),
     mimeType: 'application/pdf',
   };

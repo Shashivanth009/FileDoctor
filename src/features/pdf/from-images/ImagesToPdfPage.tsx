@@ -107,7 +107,7 @@ export function ImagesToPdfPage() {
       proc.setProgress(100);
 
       const res: ProcessingResult = {
-        blob: new Blob([pdfBytes], { type: 'application/pdf' }),
+        blob: new Blob([pdfBytes.buffer as ArrayBuffer], { type: 'application/pdf' }),
         fileName: 'images.pdf',
         mimeType: 'application/pdf',
         metadata: { pageCount: files.length },

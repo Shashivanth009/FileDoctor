@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': `${__dirname}src`,
     },
   },
   optimizeDeps: {
@@ -15,15 +17,17 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          'pdf-lib': ['pdf-lib'],
-          'pdfjs': ['pdfjs-dist'],
-          'xlsx': ['xlsx'],
-          'papaparse': ['papaparse'],
+        manualChunks(id) {
+          if (id.includes('node_modules/pdf-lib')) return 'pdf-lib';
+          if (id.includes('node_modules/pdfjs-dist')) return 'pdfjs';
+          if (id.includes('node_modules/xlsx')) return 'xlsx';
+          if (id.includes('node_modules/papaparse')) return 'papaparse';
+          if (id.includes('node_modules/framer-motion')) return 'framer-motion';
         },
       },
     },
   },
+  // @ts-expect-error vitest augments this field at runtime
   test: {
     globals: true,
     environment: 'jsdom',

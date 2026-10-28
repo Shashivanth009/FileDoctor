@@ -87,7 +87,7 @@ export async function csvToXlsx(file: File): Promise<ProcessingResult> {
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
   const xlsxBytes = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' }) as Uint8Array;
-  const blob = new Blob([xlsxBytes], {
+  const blob = new Blob([(xlsxBytes as Uint8Array).buffer as ArrayBuffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
 
