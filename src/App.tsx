@@ -1,122 +1,108 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AppLayout } from '@/components/layout/AppLayout';
+import { ToastProvider } from '@/components/feedback/Toast';
+import { useTheme } from '@/hooks/useTheme';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Pages
+import { HomePage } from '@/features/home/HomePage';
+import { AllToolsPage } from '@/features/home/AllToolsPage';
+
+// PDF
+import { MergePdfPage } from '@/features/pdf/merge/MergePdfPage';
+import { SplitPdfPage } from '@/features/pdf/split/SplitPdfPage';
+import { CompressPdfPage } from '@/features/pdf/compress/CompressPdfPage';
+import { PdfToImagesPage } from '@/features/pdf/to-images/PdfToImagesPage';
+import { ImagesToPdfPage } from '@/features/pdf/from-images/ImagesToPdfPage';
+import { SignPdfPage } from '@/features/pdf/sign/SignPdfPage';
+import { PdfCategoryPage } from '@/features/pdf/PdfCategoryPage';
+
+// Images
+import { ImageConvertPage } from '@/features/images/convert/ImageConvertPage';
+import { ImageResizePage } from '@/features/images/resize/ImageResizePage';
+import { ImageCompressPage } from '@/features/images/compress/ImageCompressPage';
+import { MetadataPage } from '@/features/images/metadata/MetadataPage';
+import { PalettePage } from '@/features/images/palette/PalettePage';
+import { ImageCategoryPage } from '@/features/images/ImageCategoryPage';
+
+// Data & Text
+import { TabularConvertPage } from '@/features/data-text/tabular-convert/TabularConvertPage';
+import { CodeFormatPage } from '@/features/data-text/code-format/CodeFormatPage';
+import { TextCleanerPage } from '@/features/data-text/text-cleaner/TextCleanerPage';
+import { DataCategoryPage } from '@/features/data-text/DataCategoryPage';
+
+// Audio
+import { AudioPage, AudioConvertPage } from '@/features/audio/AudioPage';
+import { AudioCategoryPage } from '@/features/audio/AudioCategoryPage';
+
+// AI
+import { SummarizePage, OcrPage } from '@/features/ai/AiPage';
+import { AiCategoryPage } from '@/features/ai/AiCategoryPage';
+
+// Other
+import { HistoryPage } from '@/features/history/HistoryPage';
+import { FavoritesPage } from '@/features/history/FavoritesPage';
+import { SettingsPage } from '@/features/settings/SettingsPage';
+
+function AppRoutes() {
+  const { theme, setTheme } = useTheme();
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <Routes>
+      <Route element={<AppLayout theme={theme} onThemeChange={setTheme} />}>
+        <Route index element={<HomePage />} />
+        <Route path="tools" element={<AllToolsPage />} />
 
-      <div className="ticks"></div>
+        {/* PDF Clinic */}
+        <Route path="pdf" element={<PdfCategoryPage />} />
+        <Route path="pdf/merge" element={<MergePdfPage />} />
+        <Route path="pdf/split" element={<SplitPdfPage />} />
+        <Route path="pdf/compress" element={<CompressPdfPage />} />
+        <Route path="pdf/to-images" element={<PdfToImagesPage />} />
+        <Route path="pdf/from-images" element={<ImagesToPdfPage />} />
+        <Route path="pdf/sign" element={<SignPdfPage />} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {/* Image Studio */}
+        <Route path="images" element={<ImageCategoryPage />} />
+        <Route path="images/convert" element={<ImageConvertPage />} />
+        <Route path="images/resize" element={<ImageResizePage />} />
+        <Route path="images/compress" element={<ImageCompressPage />} />
+        <Route path="images/metadata" element={<MetadataPage />} />
+        <Route path="images/palette" element={<PalettePage />} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {/* Data & Text */}
+        <Route path="data" element={<DataCategoryPage />} />
+        <Route path="data/tabular" element={<TabularConvertPage />} />
+        <Route path="data/code" element={<CodeFormatPage />} />
+        <Route path="data/text" element={<TextCleanerPage />} />
+
+        {/* Audio */}
+        <Route path="audio" element={<AudioCategoryPage />} />
+        <Route path="audio/convert" element={<AudioConvertPage />} />
+        <Route path="audio/trim" element={<AudioPage />} />
+
+        {/* AI */}
+        <Route path="ai" element={<AiCategoryPage />} />
+        <Route path="ai/summarize" element={<SummarizePage />} />
+        <Route path="ai/ocr" element={<OcrPage />} />
+
+        {/* Other */}
+        <Route path="history" element={<HistoryPage />} />
+        <Route path="favorites" element={<FavoritesPage />} />
+        <Route path="settings" element={<SettingsPage />} />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ToastProvider>
+        <AppRoutes />
+      </ToastProvider>
+    </BrowserRouter>
+  );
+}
