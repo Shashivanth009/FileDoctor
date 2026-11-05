@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { FileUp, ArrowUp, ArrowDown, Trash2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { FileUp, ArrowUp, ArrowDown, Trash2, Camera, Sparkles, ArrowRight } from 'lucide-react';
 import { ToolHeader, FileUploadZone, Button, Card, Select, Slider, ProgressBar, ResultPanel, useToast } from '@/components/ui';
+import { CameraCaptureModal } from '@/components/shared/CameraCaptureModal';
 import { imagesToPdf } from '@/services/pdfService';
 import { formatFileSize, downloadBlob } from '@/services/fileService';
 import { addHistoryEntry, saveOutput } from '@/services/historyService';
@@ -12,6 +14,7 @@ export const ImagesToPdfPage: React.FC = () => {
   const [orientation, setOrientation] = useState<'portrait' | 'landscape'>('portrait');
   const [margin, setMargin] = useState<number>(20);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [cameraModalOpen, setCameraModalOpen] = useState(false);
   const [result, setResult] = useState<ProcessingResult | null>(null);
   const { toast } = useToast();
 
@@ -80,6 +83,49 @@ export const ImagesToPdfPage: React.FC = () => {
         categoryColor="#FF788C"
         formats={['.png', '.jpg', '.jpeg', '.webp']}
         privacyLevel="local"
+      />
+
+      {/* Camera Document Scanner Smart Suggestion Banner */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-gradient-to-r from-electric-blue/10 via-surface-navy to-arctic-mint/10 border border-electric-blue/30 shadow-md">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-electric-blue/20 flex items-center justify-center text-electric-blue flex-shrink-0">
+            <Camera className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-xs font-bold text-main-white flex items-center gap-1.5">
+              <span>Scanning paper documents or receipts?</span>
+              <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-arctic-mint/20 text-arctic-mint uppercase">
+                Smart Auto-Crop
+              </span>
+            </h4>
+            <p className="text-[11px] text-muted-white">
+              Use our AI Camera Document Scanner with 4-corner perspective correction and CamScanner filters.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 self-end sm:self-auto flex-shrink-0">
+          <button
+            type="button"
+            onClick={() => setCameraModalOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-navy border border-border-color text-main-white text-xs font-semibold hover:border-arctic-mint hover:text-arctic-mint transition-colors cursor-pointer"
+          >
+            <Camera className="w-3.5 h-3.5 text-arctic-mint" />
+            <span>Quick Snap</span>
+          </button>
+          <Link
+            to="/tools/pdf-scan"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-electric-blue text-white text-xs font-bold hover:bg-electric-blue/90 transition-all shadow-sm shadow-electric-blue/20"
+          >
+            <span>Open Scanner</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </div>
+
+      <CameraCaptureModal
+        open={cameraModalOpen}
+        onClose={() => setCameraModalOpen(false)}
+        onCapture={(newFile) => handleFiles([newFile])}
       />
 
       <Card padding="lg">

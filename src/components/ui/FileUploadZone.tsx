@@ -1,7 +1,9 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, X, File as FileIcon } from 'lucide-react';
+import { Upload, X, File as FileIcon, Camera } from 'lucide-react';
+import { PDFDocument } from 'pdf-lib';
 import { formatFileSize } from '@/services/fileService';
+import { CameraCaptureModal } from '@/components/shared/CameraCaptureModal';
 
 interface FileUploadZoneProps {
   onFiles: (files: File[]) => void;
@@ -12,6 +14,7 @@ interface FileUploadZoneProps {
   description?: string;
   files?: File[];
   onRemoveFile?: (index: number) => void;
+  allowCamera?: boolean;
 }
 
 export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
@@ -23,8 +26,10 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
   description,
   files = [],
   onRemoveFile,
+  allowCamera = true,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
+  const [cameraModalOpen, setCameraModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -60,6 +65,32 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
     [onFiles]
   );
 
+  const handleCameraCapture = async (capturedFile: File) => {
+    const isPdfExpected = accept && accept.toLowerCase().includes('pdf') && !accept.toLowerCase().includes('image');
+
+    if (isPdfExpected) {
+      try {
+        const pdfDoc = await PDFDocument.create();
+        const imgBytes = new Uint8Array(await capturedFile.arrayBuffer());
+        const img = await pdfDoc.embedJpg(imgBytes);
+        const page = pdfDoc.addPage([img.width, img.height]);
+        page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+        const pdfBytes = await pdfDoc.save();
+        const pdfFile = new File(
+          [pdfBytes as unknown as BlobPart],
+          `camera_scan_${Date.now()}.pdf`,
+          { type: 'application/pdf' }
+        );
+        onFiles(multiple ? [...files, pdfFile] : [pdfFile]);
+        return;
+      } catch (err) {
+        console.warn('Auto image-to-PDF conversion fallback:', err);
+      }
+    }
+
+    onFiles(multiple ? [...files, capturedFile] : [capturedFile]);
+  };
+
   return (
     <div className="space-y-3">
       <motion.div
@@ -94,7 +125,26 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
             <p className="text-xs text-muted-white mt-1">Max size: {formatFileSize(maxSize)}</p>
           )}
         </div>
+
+        {allowCamera && (
+          <div className="pt-1" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              onClick={() => setCameraModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-surface-navy border border-border-color text-main-white text-xs font-semibold hover:border-arctic-mint hover:text-arctic-mint transition-colors cursor-pointer shadow-sm hover:shadow-arctic-mint/20"
+            >
+              <Camera className="w-3.5 h-3.5 text-arctic-mint" />
+              <span>Snap Photo with Camera</span>
+            </button>
+          </div>
+        )}
       </motion.div>
+
+      <CameraCaptureModal
+        open={cameraModalOpen}
+        onClose={() => setCameraModalOpen(false)}
+        onCapture={handleCameraCapture}
+      />
 
       <AnimatePresence>
         {files.length > 0 && (
