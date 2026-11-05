@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/* 
+  Arctic Pulse Design Tokens - Dynamic Light / Dark Switching
+  Complies with Section 3 Visual Identity Specifications
+*/
+:root, .dark {
+  --ink-navy: #10172A;
+  --deep-navy: #151F35;
+  --surface-navy: #1B2942;
+  --elevated-navy: #243653;
+  --electric-blue: #496BFF;
+  --bright-blue: #6382FF;
+  --arctic-mint: #48DCC7;
+  --soft-mint: #A0F0E3;
+  --coral: #FF788C;
+  --amber: #FFBF69;
+  --success: #35C98A;
+  --main-white: #F6F8FF;
+  --muted-white: #B9C5D9;
+  --border-color: #2A3953;
+
+  --cat-pdf: #FF788C;
+  --cat-image: #48DCC7;
+  --cat-audio: #9B8AFF;
+  --cat-data: #496BFF;
+  --cat-ai: #C4B5FD;
+}
+
+.light {
+  --ink-navy: #F3F6FC;           /* Background */
+  --deep-navy: #EAF0F8;          /* Secondary background / Header / Nav */
+  --surface-navy: #FFFFFF;       /* Cards and panels */
+  --elevated-navy: #F8FAFF;      /* Elevated surfaces / Inputs */
+  --electric-blue: #3D5FE8;      /* Primary actions */
+  --bright-blue: #5375FF;        /* Hover states */
+  --arctic-mint: #139F99;        /* Secondary accent & Privacy highlights */
+  --soft-mint: #D0F5EF;          /* Subtle accents */
+  --coral: #E54860;              /* Errors and warnings */
+  --amber: #DD7A1E;              /* Caution */
+  --success: #20A065;            /* Successful operations */
+  --main-white: #172033;         /* Primary text */
+  --muted-white: #56647B;        /* Secondary text */
+  --border-color: #DFE6F0;       /* Borders */
+
+  --cat-pdf: #E54860;
+  --cat-image: #139F99;
+  --cat-audio: #7B68EE;
+  --cat-data: #3D5FE8;
+  --cat-ai: #8A63D2;
+}
+
+@theme {
+  --color-ink-navy: var(--ink-navy);
+  --color-deep-navy: var(--deep-navy);
+  --color-surface-navy: var(--surface-navy);
+  --color-elevated-navy: var(--elevated-navy);
+  --color-electric-blue: var(--electric-blue);
+  --color-bright-blue: var(--bright-blue);
+  --color-arctic-mint: var(--arctic-mint);
+  --color-soft-mint: var(--soft-mint);
+  --color-coral: var(--coral);
+  --color-amber: var(--amber);
+  --color-success: var(--success);
+  --color-main-white: var(--main-white);
+  --color-muted-white: var(--muted-white);
+  --color-border-color: var(--border-color);
+
+  /* Category accents */
+  --color-cat-pdf: var(--cat-pdf);
+  --color-cat-image: var(--cat-image);
+  --color-cat-audio: var(--cat-audio);
+  --color-cat-data: var(--cat-data);
+  --color-cat-ai: var(--cat-ai);
+
+  /* Font families */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Manrope', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2A3953;
+  border-radius: 3px;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: #DFE6F0;
+  border-radius: 3px;
+}
+
+/* Focus ring utility */
+.focus-ring {
+  @apply outline-none ring-2 ring-electric-blue/50 ring-offset-2 ring-offset-ink-navy;
+}
