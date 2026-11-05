@@ -21,6 +21,8 @@ import { AiUtilities } from '@/pages/categories/AiUtilities';
 import { CompressionCenter } from '@/pages/categories/CompressionCenter';
 
 // PDF Tools
+import { PdfScannerPage } from '@/pages/tools/PdfScannerPage';
+import { PdfOrganizePage } from '@/pages/tools/PdfOrganizePage';
 import { PdfCompressorPage } from '@/pages/tools/PdfCompressorPage';
 import { PdfMergePage } from '@/pages/tools/PdfMergePage';
 import { PdfSplitPage } from '@/pages/tools/PdfSplitPage';
@@ -97,10 +99,12 @@ export const App: React.FC = () => {
             <Route path="settings" element={<SettingsPage />} />
 
             {/* Functional PDF Tool Routes */}
+            <Route path="tools/pdf-scan" element={<PdfScannerPage />} />
+            <Route path="tools/image-scan" element={<PdfScannerPage />} />
             <Route path="tools/pdf-compress" element={<PdfCompressorPage />} />
             <Route path="tools/pdf-merge" element={<PdfMergePage />} />
             <Route path="tools/pdf-split" element={<PdfSplitPage />} />
-            <Route path="tools/pdf-organize" element={<PdfSplitPage />} />
+            <Route path="tools/pdf-organize" element={<PdfOrganizePage />} />
             <Route path="tools/pdf-to-images" element={<PdfToImagesPage />} />
             <Route path="tools/images-to-pdf" element={<ImagesToPdfPage />} />
             <Route path="tools/pdf-sign" element={<PdfSignerPage />} />

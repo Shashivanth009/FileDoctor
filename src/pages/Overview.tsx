@@ -15,6 +15,8 @@ import {
   Clock,
   Sparkle,
   Zap,
+  Camera,
+  Layers,
 } from 'lucide-react';
 import { Button, Card, Badge, FileUploadZone } from '@/components/ui';
 import { tools, getPopularTools, categories } from '@/data/toolRegistry';
@@ -74,32 +76,91 @@ export const Overview: React.FC = () => {
 
   return (
     <div className="space-y-12 pb-16">
-      {/* Hero Section */}
-      <section className="text-center max-w-3xl mx-auto pt-6 pb-2 space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-arctic-mint/10 border border-arctic-mint/25 text-arctic-mint text-xs font-medium">
-          <ShieldCheck className="w-4 h-4" />
-          <span>100% Client-Side Engine · Zero File Uploads</span>
+      {/* Hero Section with Ambient Glow Mesh & Micro-animations */}
+      <section className="relative text-center max-w-4xl mx-auto pt-6 pb-2 space-y-6">
+        {/* Ambient background blur elements */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-tr from-electric-blue/15 via-arctic-mint/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-arctic-mint/10 border border-arctic-mint/30 text-arctic-mint text-xs font-semibold shadow-sm backdrop-blur-sm"
+          >
+            <ShieldCheck className="w-4 h-4 text-arctic-mint" />
+            <span>100% Client-Side Engine · Zero Server Uploads</span>
+          </motion.div>
+
+          <Link
+            to="/tools/pdf-scan"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-electric-blue/15 border border-electric-blue/30 text-electric-blue text-xs font-semibold hover:bg-electric-blue/25 transition-all shadow-sm group"
+          >
+            <Camera className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+            <span>NEW: Camera Document Scanner</span>
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+          </Link>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-heading tracking-tight text-main-white leading-tight">
+        <motion.h1
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="text-4xl sm:text-5xl lg:text-6xl font-black font-heading tracking-tight text-main-white leading-[1.12]"
+        >
           Your files. <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue via-bright-blue to-arctic-mint">
             Feeling lighter.
           </span>
-        </h1>
+        </motion.h1>
 
-        <p className="text-base sm:text-lg text-muted-white max-w-2xl mx-auto">
-          Convert, compress, protect, and transform your files — privately, right inside your browser without accounts, subscriptions, or remote storage.
-        </p>
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="text-base sm:text-lg text-muted-white max-w-2xl mx-auto leading-relaxed"
+        >
+          Convert, compress, scan, protect, and rearrange your files — privately, right inside your browser without accounts, subscriptions, or remote storage.
+        </motion.p>
 
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-          <Button size="lg" icon={<Zap className="w-4 h-4" />} onClick={() => navigate('/tools')}>
-            Explore All Tools
-          </Button>
-          <Button variant="secondary" size="lg" icon={<Minimize2 className="w-4 h-4" />} onClick={() => navigate('/compression')}>
-            Compression Center
-          </Button>
+        {/* Feature Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] text-muted-white pt-1">
+          <span className="px-2.5 py-1 rounded-lg bg-surface-navy border border-border-color">📄 Multi-Page PDF Scanner</span>
+          <span className="px-2.5 py-1 rounded-lg bg-surface-navy border border-border-color">⚡ High-Fidelity Compression</span>
+          <span className="px-2.5 py-1 rounded-lg bg-surface-navy border border-border-color">📑 Drag & Drop Organizer</span>
+          <span className="px-2.5 py-1 rounded-lg bg-surface-navy border border-border-color">🔒 1-Hour Ephemeral Vault</span>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+          className="flex flex-wrap items-center justify-center gap-3 pt-2"
+        >
+          <Button
+            size="lg"
+            icon={<Camera className="w-4 h-4 text-arctic-mint" />}
+            onClick={() => navigate('/tools/pdf-scan')}
+            className="shadow-lg shadow-electric-blue/20"
+          >
+            Scan Document (Camera)
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            icon={<Layers className="w-4 h-4 text-electric-blue" />}
+            onClick={() => navigate('/tools/pdf-organize')}
+          >
+            Rearrange PDF Pages
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            icon={<Zap className="w-4 h-4 text-arctic-mint" />}
+            onClick={() => navigate('/tools')}
+          >
+            Explore 30+ Tools
+          </Button>
+        </motion.div>
       </section>
 
       {/* Global Drag & Drop Upload Zone */}
