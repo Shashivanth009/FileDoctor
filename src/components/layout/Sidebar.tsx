@@ -15,6 +15,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  PlusCircle,
 } from 'lucide-react';
 import { Logo } from './Logo';
 import { useSettingsStore } from '@/stores/settingsStore';
@@ -25,7 +26,7 @@ interface NavItem {
   route: string;
   icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   accentColor?: string;
-  badge?: number;
+  badge?: number | string;
 }
 
 export const Sidebar: React.FC = () => {
@@ -35,6 +36,7 @@ export const Sidebar: React.FC = () => {
 
   const primaryNav: NavItem[] = [
     { name: 'Overview', route: '/', icon: Home },
+    { name: 'Creation Studio', route: '/create', icon: PlusCircle, accentColor: '#48DCC7', badge: 'New' },
     { name: 'All Tools', route: '/tools', icon: LayoutGrid },
     { name: 'PDF Clinic', route: '/pdf', icon: FileText, accentColor: '#FF788C' },
     { name: 'Image Studio', route: '/image', icon: Image, accentColor: '#48DCC7' },

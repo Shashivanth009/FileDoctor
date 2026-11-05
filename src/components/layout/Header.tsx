@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Menu, Sun, Moon, Laptop, ShieldCheck, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Search, Menu, Sun, Moon, Laptop, ShieldCheck, Clock, Plus } from 'lucide-react';
 import { useThemeStore } from '@/stores/themeStore';
 import { getHistory, HISTORY_UPDATED_EVENT } from '@/services/historyService';
 
@@ -65,6 +66,16 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        {/* Create Studio Trigger */}
+        <Link
+          to="/create"
+          title="Create documents, PDFs, graphics, or record audio"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-electric-blue to-arctic-mint text-white font-semibold text-xs shadow-md shadow-electric-blue/20 hover:scale-105 active:scale-95 transition-all shrink-0"
+        >
+          <Plus className="w-3.5 h-3.5" />
+          <span>Create</span>
+        </Link>
+
         {/* File History trigger with live count badge */}
         <button
           type="button"

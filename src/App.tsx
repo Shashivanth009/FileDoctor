@@ -11,6 +11,7 @@ import { RecentOperations } from '@/pages/RecentOperations';
 import { FavoritesPage } from '@/pages/FavoritesPage';
 import { PrivacyCenter } from '@/pages/PrivacyCenter';
 import { SettingsPage } from '@/pages/SettingsPage';
+import { CreationStudio } from '@/pages/CreationStudio';
 
 // Category Hub Pages
 import { PdfClinic } from '@/pages/categories/PdfClinic';
@@ -86,6 +87,7 @@ export const App: React.FC = () => {
           <Route path="/" element={<Layout />}>
             {/* Primary Hubs */}
             <Route index element={<Overview />} />
+            <Route path="create" element={<CreationStudio />} />
             <Route path="tools" element={<AllTools />} />
             <Route path="pdf" element={<PdfClinic />} />
             <Route path="image" element={<ImageStudio />} />

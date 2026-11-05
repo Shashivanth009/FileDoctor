@@ -17,6 +17,7 @@ import {
   Zap,
   Camera,
   Layers,
+  Mic,
 } from 'lucide-react';
 import { Button, Card, Badge, FileUploadZone } from '@/components/ui';
 import { tools, getPopularTools, categories } from '@/data/toolRegistry';
@@ -211,6 +212,52 @@ export const Overview: React.FC = () => {
             </motion.div>
           )}
         </Card>
+      </section>
+
+      {/* Creation Studio Spotlight Banner */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded bg-arctic-mint/15 text-arctic-mint text-[11px] font-bold border border-arctic-mint/30">
+                CREATE FROM SCRATCH
+              </span>
+              <h2 className="text-xl font-bold font-heading text-main-white">Creation Studio</h2>
+            </div>
+            <p className="text-xs text-muted-white mt-0.5">Build PDFs, graphics, studio audio, and datasets with zero server uploads</p>
+          </div>
+          <Link to="/create" className="text-xs text-arctic-mint hover:underline font-semibold flex items-center gap-1">
+            Open Studio <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { title: 'Document & PDF', desc: 'Build formal reports, invoices & briefs', icon: FileText, tab: 'doc', color: 'from-coral/20 to-coral/5', border: 'border-coral/30', accent: 'text-coral' },
+            { title: 'Graphic & Canvas', desc: 'Design social posts, banners & cards', icon: ImageIcon, tab: 'image', color: 'from-arctic-mint/20 to-arctic-mint/5', border: 'border-arctic-mint/30', accent: 'text-arctic-mint' },
+            { title: 'Voice & Audio', desc: 'Record microphone voice into studio WAV', icon: Mic, tab: 'audio', color: 'from-electric-blue/20 to-electric-blue/5', border: 'border-electric-blue/30', accent: 'text-electric-blue' },
+            { title: 'Spreadsheet & Table', desc: 'Generate datasets & export to Excel/CSV', icon: Database, tab: 'data', color: 'from-amber/20 to-amber/5', border: 'border-amber/30', accent: 'text-amber' },
+          ].map((c) => {
+            const Icon = c.icon;
+            return (
+              <button
+                key={c.title}
+                type="button"
+                onClick={() => navigate(`/create?tab=${c.tab}`)}
+                className={`p-4 rounded-2xl bg-gradient-to-br ${c.color} bg-surface-navy border ${c.border} text-left transition-all hover:scale-102 hover:shadow-xl group cursor-pointer relative overflow-hidden`}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className={`w-10 h-10 rounded-xl bg-surface-navy border border-border-color flex items-center justify-center ${c.accent} group-hover:scale-110 transition-transform`}>
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-muted-white group-hover:text-main-white group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-sm font-bold text-main-white font-heading">{c.title}</h3>
+                <p className="text-xs text-muted-white mt-1 leading-snug">{c.desc}</p>
+              </button>
+            );
+          })}
+        </div>
       </section>
 
       {/* Popular Tools Grid */}

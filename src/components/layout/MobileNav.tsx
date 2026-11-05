@@ -15,6 +15,7 @@ import {
   Star,
   Shield,
   Settings,
+  PlusCircle,
 } from 'lucide-react';
 import { Logo } from './Logo';
 
@@ -26,6 +27,7 @@ interface MobileNavProps {
 export const MobileNav: React.FC<MobileNavProps> = ({ open, onClose }) => {
   const links = [
     { name: 'Overview', route: '/', icon: Home },
+    { name: 'Creation Studio', route: '/create', icon: PlusCircle, color: '#48DCC7' },
     { name: 'All Tools', route: '/tools', icon: LayoutGrid },
     { name: 'PDF Clinic', route: '/pdf', icon: FileText, color: '#FF788C' },
     { name: 'Image Studio', route: '/image', icon: Image, color: '#48DCC7' },

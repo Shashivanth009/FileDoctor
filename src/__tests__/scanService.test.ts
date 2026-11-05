@@ -100,3 +100,4 @@ describe('scanService document camera pipeline', () => {
     expect(res.outputFilename).toContain('Test_Scanned_Document');
   });
 });
+
