@@ -318,3 +318,4 @@ export const SignaturePadModal: React.FC<SignaturePadModalProps> = ({
     </AnimatePresence>
   );
 };
+
